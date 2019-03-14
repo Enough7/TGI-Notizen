@@ -1,0 +1,374 @@
+% !TeX spellcheck = de_DE
+\documentclass[a4paper]{scrartcl}
+
+% Für mathematische Symbole
+\usepackage{mathtools}
+\usepackage{amsfonts}
+
+%\usepackage{import}
+
+\usepackage{polyglossia}
+\setdefaultlanguage[ 
+	spelling = new, 
+	babelshorthands = true ]
+{german}
+
+
+% Durchstreichen
+\usepackage[normalem]{ulem}
+
+%Hyperlinks
+\usepackage{hyperref}
+\hypersetup{
+	colorlinks   = true, %Colours links instead of ugly boxes
+	urlcolor     = blue, %Colour for external hyperlinks
+	linkcolor    = blue, %Colour of internal links
+	citecolor   = red %Colour of citations
+}
+
+%Glossar
+%\usepackage[xindy]{glossaries}
+%\subimport{../../../../KIT/LaTex/Glossary/}{MathematikGlossary}
+%\subimport{../../../../KIT/LaTex/Glossary/}{TechnischeInformatikGlossary}
+
+% Fonts
+\usepackage{fontspec}
+\usepackage{unicode-math}
+\setmainfont{Roboto}
+\setsansfont{Roboto}
+\setmonofont{Roboto}
+
+% Aside Kommentar
+\usepackage{marginnote}
+\reversemarginpar
+
+% Package für bessere Liste
+\usepackage{scrextend}
+
+% Coole Listen [Seperator-zeichen]
+\usepackage[ampersand]{easylist}
+
+% \emph{} - ändern
+\DeclareTextFontCommand{\emph}{\bfseries}
+
+%Für Farben
+\usepackage[dvipsnames]{xcolor}
+\definecolor{TextMarkerGelb}{RGB}{255, 255, 120}
+\usepackage{soul}
+\sethlcolor{TextMarkerGelb}
+
+% Paragraph-Einstellung
+\usepackage[explicit]{titlesec}
+\setcounter{secnumdepth}{4}
+\titleformat{\paragraph}[block]
+{\normalfont\normalsize\bfseries}{}{0pt}{\uline{#1}}
+\titleformat{name=\paragraph,numberless}[block]
+{\normalfont\normalsize\bfseries}{}{0pt}{\uline{#1.}}
+
+\usepackage{fontspec}
+\usepackage{unicode-math}
+\setmainfont{Roboto}
+\setsansfont{Roboto}
+\setmonofont{Roboto}
+\setmathfont{Asana Math} % for math symbols, can be any other OpenType math font
+\setmathfont[range=\mathup]  {Roboto}
+\setmathfont[range=\mathbfup]{Roboto}
+\setmathfont[range=\mathbfit]{Roboto}
+%\setmathfont[range=\mathit]  {Roboto}
+
+%opening
+\title{Theoretische Grundlagen der Informatik}
+\author{Paul Züchner}
+
+
+\begin{document}
+\maketitle
+
+% Inhaltsverzeichnis
+\tableofcontents
+\newpage
+
+	\section{Wiederholung}
+		\begin{easylist}[itemize]
+			& Wörter
+				&& Eine Folge von Zeichen aus einem Alphabet \( \Sigma \)
+				&& Leeres Wort \( \varepsilon \) 
+				&& \( \Sigma^* \) Menge aller Wörter über einem Alphabet 
+			& Formale Sprachen
+				&& Eine formale Sprache L über einem Alphabet \( \Sigma \) ist eine Teilmenge \( L \subseteq \Sigma^* \)
+				&& Es gibt Präfix, Teilwort, Suffix
+			& Reguläre Ausdrücke
+				&& definieren Reguläre Sprachen
+				&& Aus Faulheit es ordentlich zu schreiben gehen wir schlampig
+			& Endliche Automaten \( DEA = (Q, \Sigma, \delta, s, F)\)
+				&& Q Menge an Zuständen
+				&& \( \Sigma \) endliche Menge von Eingabesymbolen
+				&& \( \delta \) Übergansfunktion \( \delta : Q \times \Sigma \rightarrow Q \)
+				&& s Startzustand \( s \in Q \)
+				&& F eine Menge an Endzuständen \( F \subseteq Q \)
+			& Kontextfreie Grammatiken \( G = ( \Sigma, V, S, R ) \)
+				&& \( \Sigma \) endliches Alphabet (Terminalsymbole)
+				&& V eine endliche Menge von Variablen (Nicht-Terminalsymbole)
+				&& \( S \in V \) Starsymbol
+				&& R eine endliche Menge an Ableitungregeln
+		\end{easylist}
+	
+	\section{DEA \& NEA}
+		\begin{easylist}
+			& Reg \& DEA
+			& NEA
+			&& \(  \varepsilon \) -Übergang
+			&& Potenzmengenkonstruktion
+		\end{easylist}
+	
+	\section{Tutorium 26.10.18}
+		TGI Tut Nr.24
+		maximilian.ruff@student.kit.edu
+		
+		Alphabet: endliche Menge von Zeichen
+		\begin{description}
+			\item[Alphabet] endliche Menge von Zeichen
+			\item[Formale Sprache] \( L \subseteq \Sigma^* \)
+			\item[Konkatenation] \( L_1 * L_2 = \{ uv | u \in L_1, v \in L_2 \} \)
+		\end{description}
+	
+		\subsection{Reguläre Ausdrücke}
+			\begin{align*}
+				&\emptyset , \epsilon, a \in \Sigma &\text{ sind reguläre Ausdrücke}\\
+				&\rightarrow R_1 \cup R_2, R_1 * R_2, R_1^* &\text{ sind reguläre Ausdrücke}
+			\end{align*}
+							
+	\section{Endliche Automaten}
+		\subsection{DEA}
+		\subsection{NEA}
+			NEA akzeptier Wort w \( \iff \) Es existiert Abarbeitung von w, die in einem akzeptierenen Zustand endet. \\
+			DEA und NEA können \emph{genau} die regulären Sprachen erkennen.
+		
+		\subsection{Potenzmengen-Konstruktion}
+			\[NEA \rightarrow DEA \]
+			\begin{table}[h]
+				\centering
+				\begin{tabular}{|c|c|c|}
+				\hline 
+				Zustand & a & b \\ 
+				\hline 
+				\{s\} & \{s,1\} & \{s\} \\ 
+				\hline 
+				\{s,1\} & \{s, 1, 2, 3\} & \{s, 4\} \\ 
+				\hline 
+				\emph{\{s, 1, 2, 3\}} & \{s, 1, 2, 3\} & \{s, 4\} \\ 
+				\hline 
+				\emph{\{s, 4\}} & \{s, 1\} & \{s\} \\ 
+				\hline
+			\end{tabular} 
+			\end{table}
+		\emph{Akzeptierender Zustand}
+		
+		\begin{table}[h]
+			\centering
+			\begin{tabular}{|c|c|c|}
+				\hline 
+				Zustand & a & b \\ 
+				\hline 
+				\emph{\{s, 1, 3\}} & \{1, 3\} & \{2, 3\} \\ 
+				\hline 
+				\emph{\{1, 3\}} & \{\} & \{2, 3\} \\ 
+				\hline 
+				\emph{\{2, 3\}} & \{3\} & \{3\} \\ 
+				\hline 
+				\emph{\{3\}} & \{\} & \{3\} \\ 
+				\hline 
+				\{\} & \{\} & \{\} \\ 
+				\hline 
+			\end{tabular} 
+		\end{table}
+		
+	
+	\section{Tutorium 2.11.2018}
+		Ist die Sprache regulär? \\
+		Ja? mit endlichen Automaten (NEA/DEA) oder regulären Audruck zeigen\\
+		Nein? Pumping Lemma\\
+		\\
+		BSP: \( L = \{ a^n c b^n | n \in N \} \) ist nicht regulär
+		
+		\subsection{Pumping Lemma}
+			Sei \( L \subseteq \Sigma^* \) regulär. \\
+			Dann: \( \exists n \in N : \forall w \in L \text{ mit } |w| > n \)\\
+			\( \exists u,v, x \in \Sigma^* \) mit \( w = uvx, |uv| \leq n, v \neq \epsilon : \) \\
+			\( \forall i \in N_0 : uv^i x \in L \)
+	
+	\section{Vorlesung 06.11.18}
+		\begin{easylist}
+			& Äquivalenz von Zuständen wiederholung
+			& Neroderelation 
+		\end{easylist}
+	
+	\section{Tutorium 09.11.18}
+	
+		\subsection{Aquivalenzklassenautomat}
+		Finde Zeugen die die nicht-aquivalenz bezeugen
+	
+		\begin{tabular}{|c|c|c|c|c|c|c|}
+			\hline 
+			& S & 1 & 2 & 3 & 4 & 5 \\ 
+			\hline 
+			5 & \(\epsilon\) & \(\epsilon\) & \(\epsilon\) & \(\epsilon\) & \(\epsilon\) &  \\ 
+			\hline 
+			4 & b & b & b & b &  &  \\ 
+			\hline 
+			3 & bb & bb & bb &  &  &  \\ 
+			\hline 
+			2 & bbb & / &  &  &  &  \\ 
+			\hline 
+			1 & bbb &  &  &  &  &  \\ 
+			\hline 
+			S &  &  &  &  &  &  \\ 
+			\hline 
+		\end{tabular} 
+	
+		\[ 1 \equiv 2 \]
+		
+	\section{Tutorium 16.11.18}
+		\subsection{Turingmaschine}
+			Turingmaschine startet immer auf dem ersten Zeichen von dem Eingabewort w. \\
+			Eine TM kann in einem akzeptierenden oder in einem nicht akzeptierenden Zustand halten oder gar nicht halten.\\
+			
+	\section{Tutorium 23.11.18}
+	
+		\subsection{Entscheidbarkeit}
+		
+		\subsection{NTM}
+		
+	\section{Klausurenphase}
+	\section{Endliche Automaten}
+	Endliche Automaten können nur Wörter akzeptieren oder ablehnen. Sie haben ein endliches Gedächtnis und können nicht zählen.
+	
+	\section{Äquivalenzklassenautomat}
+	Um einen Äquivalenzklassenautomat aus einen gegebenen Automaten zu erstellen, müssen wir nach Zeugen/Wörter suchen, die ggf. die nicht-Äquivalenz bezeugen können. 
+	\begin{easylist}
+		&
+	\end{easylist}
+	
+	\paragraph{DEA}
+	\paragraph{NEA}
+	Einen nicht-deterministischen endlichen Automaten kann man in einen deterministischen endlichen Automaten umformen in dem man die \emph{Potenzmengenkonstruktion} anwendet:
+	
+	\begin{table}[h]
+		\centering
+		 \begin{tabular}{|c|c|c|}
+			\hline 
+			& \multicolumn{2}{c|}{Übergang} \\  
+			Zustand & a & b \\ 
+			\hline 
+			\hline
+			\{s\} & \{s, \(q_1\)\} & \{\(q_2\)\} \\ 
+			\hline 
+			\{s, \(q_1\)\} & ... & ... \\ 
+			\hline 
+			\{\(q_2\)\} & ... & ... \\ 
+			\hline 
+		\end{tabular} 
+	\end{table}
+
+	\emph{\( \epsilon \)-Übergänge können entfernt werden} ohne die Anzahl der Zustände zu erhöhen. Dazu muss man sich anschauen welche Zustände sind erreichbar bei Eingabe x durch \( \epsilon \)-Übergänge also: \( \epsilon^* x \epsilon^* \)
+	
+	\section{Pumping-Lemma}
+		Das Pumping-Lemma ist eine Eigenschaft die jede reguläre Sprache hat, hat eine Sprache diese Eigenschaft nicht dann ist sie nicht regulär, hat eine Sprache diese Eigenschaft dann ist sie nicht zwingend regulär. 
+		\paragraph{Für reguläre Sprachen}
+		Sei L eine reguläre Sprache. Dann existiert eine Zahl \( n \in \mathbb{N} \), so dass für jedes Wort \( w \in L \) mit \( |w| > n \) eine Darstellung 
+		\[
+		w = uvx \text{ mit } |uv| \leq n \text{ und } v \neq \epsilon
+		\]
+		existiert, bei der auch \( uv^i x \in L \) ist für alle \( i \in \mathbb{N}_0 \)\\
+		Mathematisch ausgedrückt:
+		
+		\begin{align*}
+		&\forall L \subseteq \Sigma^* &\text{ mit L regulär}\\
+		&\exists n \in \mathbb{N}&\\
+		&\forall w \in L &\text{ mit } |w| > n\\
+		&\exists u, v, x \in \Sigma^* &\text{ mit } w = uvx, |uv| \leq n, v \neq \epsilon\\
+		&\forall i \in \mathbb{N}_0:&\\
+		&uv^i x \in L&
+		\end{align*}
+		
+		
+		\paragraph{Für kontextfreie Sprachen}
+		Für jede kontextfreie Sprache L gibt es eine Konstante \( n \in \mathbb{N} \), so dass
+		sich jedes Wort \( z \in L \) mit \( |z| \geq n \) so in \(z = uvwxy\) zerlegen lässt, dass
+		gilt:
+		\begin{itemize}
+			\item \(|vx| \geq 1\)
+			\item \(|vwx| \leq n\) 
+			\item \( uv^i wx^i y \in L \) für alle \( i \geq 0 \)
+		\end{itemize}
+	
+	\section{Turingmaschine}
+	Turingmaschine startet immer auf dem ersten Zeichen von dem Eingabewort w. \\
+	Eine TM kann in einem akzeptierenden oder in einem nicht akzeptierenden Zustand halten oder gar nicht halten.\\
+	
+	\section{Entscheidbarkeit}
+		Eine Menge M heißt entscheidbar, wenn ihre charakteristische
+		Funktion \(\chi(m)\) berechenbar ist. \(\chi(m)\) gibt an, ob ein Element m in M enthalten ist oder nicht:
+		\[
+			\chi(m) = \begin{dcases*}
+			1  & wenn \(m \in M\)\\
+			0 & sonst.
+			\end{dcases*}
+		\]
+		\subsection{Semi-Entscheidbarkeit}
+		Eine TM hält und akzeptiert wenn das Wort in der Sprache \(L(TM)\) liegt. Liegt es nicht in der Sprache lehnt die TM das Wort ab oder hält nicht.\\
+		Unentscheidbarkeit\\
+		
+		
+	\section{Berechenbarkeit}
+		\subsection{Churche These}
+		Die Menge der (Turing-)berechenbaren Funktionen ist genau die Men-
+		ge der im intuitiven Sinne überhaupt berechenbaren Funktionen.
+		
+		\subsection{Satz von Rice}
+		
+	\section{Chomsky-Hierarchie}
+		\paragraph{Typ 0 - rekursiv Aufzählbar}
+		Keine Einschränkungen bis auf rekursiv aufzählbar (durch einen Algorithmus).
+		\[ A \to \epsilon \] ist erlaubt.
+		\[ S \to \epsilon \] erlaubt wenn in keiner Regel S rechts vorhanden.
+		
+		\paragraph{Typ 1 - kontextsensitive}
+		Regeln müssen die Länge des Wortes verlängern oder behalten, verkürzen ist \emph{illegal}.\\
+	
+		Beispiele:
+		\[ bAc \to bac \] ist okay. b oder c müssen nicht gleichzeitig auftreten einer von beiden geht auch.
+		\[ S \to \epsilon \] erlaubt wenn in keiner Regel S rechts vorhanden.
+		\[ A \to \epsilon \] ist illegal.
+		\[ Ab \to b \] auch illegal, weil Länge des Wortes wird gekürzt.
+		
+		\paragraph{Typ 2 - kontextfrei}
+		\[ A \to b \] b kann \( \in V \lor T \)
+		\[ S \to \epsilon \] erlaubt wenn in keiner Regel S rechts vorhanden.
+		
+		\paragraph{Typ 3 - regulär}
+		Alle Produktionen müssen entweder rechts- oder linkslinear sein.
+		\[ A \to cB \] rechtslinear.
+		\[ A \to Bc \]  linkslinear.
+		\[ S \to \epsilon \] erlaubt wenn in keiner Regel S rechts vorhanden.
+	
+	\section{Chomsky-Normalform}
+		\paragraph{Umformung}
+		\begin{enumerate}
+			\item Nur \( X \to Y^* \) oder \( X \to a \) erlaubt, führe neu Variable ein um \( X \to Ya \) in \( X \to Y Z_a, Z_a \to a \) zu ersetzen.
+			\item  Rechte Seite \( \leq 2 \) führe neue Variablen ein.
+			\item Ziel: Entferne \( A \to \epsilon \). Finde alle Variablen die \( A \overset{\star}{\to} \epsilon \) bilden und gebe sie in die Menge \( V´\). Füge zusätzliche Regel hinzu für \( A \to BC \) 
+			\[
+				A \to 
+				\begin{dcases*}
+					B & falls \( C \in V´ \)\\
+					C & falls \( B \in V` \)
+				\end{dcases*}
+			\]
+			\item Identifiziere und eliminiere Kreise und Kettenregeln \( A \to B \to C \to A \) setze \( A \coloneqq B \coloneqq C\)
+			\item Ausnahme \(S \to \epsilon \)  behandeln. Enthält die Grammatik G die Regel \(S \to \epsilon \), wird ein neues Startsymbol \(S′\) für \(G'\) eingeführt. Anschließend erhält die neue Grammatik die Regeln \(S′ \to \epsilon | S \) . Damit ist sichergestellt, dass die Grammatik weiterhin das leere Wort ermöglicht und das ursprüngliche Startsymbol weiterhin auf der rechten Seite verwendet werden kann.
+		\end{enumerate}
+	
+	
+	
+\end{document}
